@@ -1,16 +1,27 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
+import AgendaSection from "@/components/AgendaSection";
+import DonationSection from "@/components/DonationSection";
+import Footer from "@/components/Footer";
+import ReservationModal from "@/components/ReservationModal";
+import { Concert } from "@/data/mockData";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const [selectedConcert, setSelectedConcert] = useState<Concert | null>(null);
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen">
+      <Header />
+      <HeroSection />
+      <AgendaSection onReserve={setSelectedConcert} />
+      <DonationSection />
+      <Footer />
+      {selectedConcert && (
+        <ReservationModal concert={selectedConcert} onClose={() => setSelectedConcert(null)} />
+      )}
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
