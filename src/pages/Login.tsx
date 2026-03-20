@@ -1,10 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Lock, Music } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { Lock, ArrowLeft } from "lucide-react";
 import { useApp } from "@/contexts/AppContext";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 const Login = () => {
   const [password, setPassword] = useState("");
@@ -22,34 +19,75 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-navy flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-sm animate-fade-in">
+        {/* Back link */}
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-navy transition-colors mb-8"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Voltar ao site
+        </Link>
+
         <div className="text-center mb-8">
-          <Music className="h-10 w-10 text-gold mx-auto mb-4" />
-          <h1 className="font-display text-2xl font-bold text-card">Área Administrativa</h1>
-          <p className="text-gold-light/50 text-sm mt-2">Acesso restrito à equipe do projeto</p>
+          <div className="w-14 h-14 bg-navy rounded-xl flex items-center justify-center mx-auto mb-5">
+            <Lock className="h-6 w-6 text-white" />
+          </div>
+          <h1 className="font-display text-2xl font-bold text-foreground">
+            Área Administrativa
+          </h1>
+          <p className="text-muted-foreground text-sm mt-2">
+            Acesso restrito à equipe do projeto
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-card rounded-xl p-6 shadow-2xl space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-2xl p-7 shadow-sm border border-border space-y-5"
+        >
           <div className="space-y-1.5">
-            <Label htmlFor="password">Senha</Label>
+            <label
+              htmlFor="password"
+              className="block text-xs font-semibold text-foreground/80 tracking-wide uppercase"
+            >
+              Senha
+            </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
+              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <input
                 id="password"
                 type="password"
                 value={password}
-                onChange={(e) => { setPassword(e.target.value); setError(""); }}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setError("");
+                }}
                 placeholder="Digite a senha"
-                className="pl-10"
+                className="input-md3 pl-10"
               />
             </div>
           </div>
-          {error && <p className="text-sm text-destructive">{error}</p>}
-          <Button type="submit" className="w-full bg-gradient-gold text-accent-foreground font-semibold hover:opacity-90">
+
+          {error && (
+            <p className="text-xs text-destructive font-medium bg-destructive/5 px-3 py-2 rounded-lg">
+              {error}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full bg-navy text-white font-semibold py-3.5 px-6 rounded-lg text-sm hover:bg-navy-light transition-all duration-300 shadow-sm hover:shadow-md"
+          >
             Entrar
-          </Button>
-          <p className="text-xs text-center text-muted-foreground">Demo: senha é <code className="bg-muted px-1.5 py-0.5 rounded">admin123</code></p>
+          </button>
+
+          <p className="text-xs text-center text-muted-foreground">
+            Demo: senha é{" "}
+            <code className="bg-secondary px-1.5 py-0.5 rounded text-foreground font-mono">
+              admin123
+            </code>
+          </p>
         </form>
       </div>
     </div>
