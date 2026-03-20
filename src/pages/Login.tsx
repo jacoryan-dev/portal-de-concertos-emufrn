@@ -64,7 +64,8 @@ const Login = () => {
                   setError("");
                 }}
                 placeholder="Digite a senha"
-                className="input-md3 pl-10"
+                className="input-md3"
+                style={{ paddingLeft: "2.5rem" }}
               />
             </div>
           </div>
