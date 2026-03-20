@@ -6,42 +6,45 @@
 
 @layer base {
   :root {
-    --background: 220 20% 97%;
-    --foreground: 220 40% 13%;
+    --background: 0 0% 100%;
+    --foreground: 220 25% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 40% 13%;
+    --card-foreground: 220 25% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 40% 13%;
+    --popover-foreground: 220 25% 12%;
 
-    --primary: 220 60% 15%;
-    --primary-foreground: 45 60% 70%;
+    --primary: 220 65% 18%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 20% 94%;
-    --secondary-foreground: 220 40% 13%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 25% 12%;
 
-    --muted: 220 15% 92%;
+    --muted: 220 14% 96%;
     --muted-foreground: 220 10% 46%;
 
-    --accent: 45 80% 55%;
-    --accent-foreground: 220 60% 10%;
+    --accent: 42 78% 52%;
+    --accent-foreground: 220 65% 10%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 20% 88%;
-    --input: 220 20% 88%;
-    --ring: 45 80% 55%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 220 65% 18%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --gold: 45 80% 55%;
-    --gold-light: 45 70% 75%;
-    --gold-dark: 45 90% 40%;
-    --navy: 220 60% 15%;
-    --navy-light: 220 40% 25%;
-    --navy-dark: 220 70% 8%;
+    --gold: 42 78% 52%;
+    --gold-light: 42 60% 72%;
+    --gold-dark: 42 85% 38%;
+    --navy: 220 65% 18%;
+    --navy-light: 220 45% 28%;
+    --navy-dark: 220 75% 8%;
+
+    --silver: 220 10% 72%;
+    --silver-light: 220 8% 88%;
 
     --font-display: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
@@ -63,19 +66,19 @@
     --card-foreground: 220 10% 90%;
     --popover: 220 60% 10%;
     --popover-foreground: 220 10% 90%;
-    --primary: 45 80% 55%;
-    --primary-foreground: 220 60% 10%;
+    --primary: 42 78% 52%;
+    --primary-foreground: 220 65% 10%;
     --secondary: 220 40% 18%;
     --secondary-foreground: 220 10% 90%;
     --muted: 220 40% 18%;
     --muted-foreground: 220 10% 60%;
-    --accent: 45 80% 55%;
-    --accent-foreground: 220 60% 10%;
+    --accent: 42 78% 52%;
+    --accent-foreground: 220 65% 10%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
     --border: 220 40% 18%;
     --input: 220 40% 18%;
-    --ring: 45 80% 55%;
+    --ring: 42 78% 52%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -92,8 +95,12 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);
   }
 
@@ -104,17 +111,70 @@
 
 @layer utilities {
   .text-gradient-gold {
-    background: linear-gradient(135deg, hsl(45 80% 55%), hsl(45 70% 75%));
+    background: linear-gradient(135deg, hsl(42 78% 52%), hsl(42 60% 72%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-navy {
+    background: linear-gradient(135deg, hsl(220 65% 18%), hsl(220 45% 28%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .bg-gradient-navy {
-    background: linear-gradient(135deg, hsl(220 60% 15%), hsl(220 70% 8%));
+    background: linear-gradient(135deg, hsl(220 65% 18%), hsl(220 75% 8%));
   }
 
   .bg-gradient-gold {
-    background: linear-gradient(135deg, hsl(45 80% 55%), hsl(45 90% 40%));
+    background: linear-gradient(135deg, hsl(42 78% 52%), hsl(42 85% 38%));
+  }
+
+  .section-divider {
+    @apply w-16 h-0.5 mx-auto;
+    background: linear-gradient(90deg, hsl(42 78% 52%), hsl(220 65% 18%));
+  }
+
+  .card-institutional {
+    @apply bg-card rounded-xl border transition-all duration-300;
+    border-color: #E5E7EB;
+  }
+
+  .card-institutional:hover {
+    @apply shadow-lg;
+    transform: translateY(-2px);
+  }
+
+  .card-premium {
+    @apply bg-card rounded-xl transition-all duration-300;
+    border: 1px solid hsl(42 78% 52% / 0.3);
+    background: linear-gradient(135deg, hsl(0 0% 100%), hsl(42 60% 98%));
+  }
+
+  .card-premium:hover {
+    border-color: hsl(42 78% 52% / 0.6);
+    @apply shadow-lg;
+    transform: translateY(-2px);
+  }
+
+  .input-md3 {
+    @apply w-full px-4 py-3 rounded-lg text-sm transition-all duration-200;
+    border: 1.5px solid hsl(220 13% 87%);
+    background: hsl(220 14% 98%);
+    font-family: var(--font-body);
+  }
+
+  .input-md3:focus {
+    outline: none;
+    border-color: hsl(220 65% 18%);
+    box-shadow: 0 0 0 3px hsl(220 65% 18% / 0.08);
+    background: white;
+  }
+
+  .input-md3::placeholder {
+    color: hsl(220 10% 60%);
+    font-weight: 300;
   }
 }

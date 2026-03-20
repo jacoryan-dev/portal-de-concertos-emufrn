@@ -1,6 +1,5 @@
-import { Calendar, MapPin, Ticket } from "lucide-react";
+import { Calendar, MapPin, Users } from "lucide-react";
 import { Concert } from "@/data/mockData";
-import { Button } from "@/components/ui/button";
 
 interface Props {
   concert: Concert;
@@ -18,45 +17,67 @@ const ConcertCard = ({ concert, onReserve }: Props) => {
   });
 
   return (
-    <div className="group bg-card rounded-xl border border-border p-6 hover:shadow-xl hover:shadow-gold/5 transition-all duration-300 hover:-translate-y-1">
-      <div className="flex items-start justify-between mb-4">
-        <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${
-          isSoldOut
-            ? "bg-destructive/10 text-destructive"
-            : "bg-gold/10 text-gold-dark"
-        }`}>
-          <Ticket className="h-3 w-3" />
-          {isSoldOut ? "Esgotado" : `${remaining} disponíveis`}
-        </div>
-        <span className="text-sm font-medium text-muted-foreground">{concert.time}</span>
+    <div className="card-institutional p-6 flex flex-col">
+      {/* Top row: status + time */}
+      <div className="flex items-center justify-between mb-5">
+        <span
+          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${
+            isSoldOut
+              ? "bg-amber-50 text-amber-700 border border-amber-200"
+              : "bg-emerald-50 text-emerald-700 border border-emerald-200"
+          }`}
+        >
+          <span
+            className={`w-1.5 h-1.5 rounded-full ${
+              isSoldOut ? "bg-amber-500" : "bg-emerald-500"
+            }`}
+          />
+          {isSoldOut ? "Lista de Espera" : "Disponível"}
+        </span>
+        <span className="text-xs font-medium text-muted-foreground bg-secondary px-2.5 py-1 rounded-md">
+          {concert.time}
+        </span>
       </div>
 
-      <h3 className="font-display text-xl font-semibold text-foreground mb-2 group-hover:text-navy-light transition-colors">
+      {/* Title + description */}
+      <h3 className="font-display text-xl font-semibold text-foreground mb-2 leading-snug">
         {concert.title}
       </h3>
-      <p className="text-sm text-muted-foreground mb-4">{concert.description}</p>
+      <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+        {concert.description}
+      </p>
 
-      <div className="space-y-2 mb-6">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Calendar className="h-4 w-4 text-gold" />
-          {formattedDate}
+      {/* Meta */}
+      <div className="space-y-2.5 mb-6">
+        <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
+          <Calendar className="h-4 w-4 text-navy/60" />
+          <span>{formattedDate}</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <MapPin className="h-4 w-4 text-gold" />
-          {concert.location}
+        <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
+          <MapPin className="h-4 w-4 text-navy/60" />
+          <span>{concert.location}</span>
         </div>
+        {!isSoldOut && (
+          <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
+            <Users className="h-4 w-4 text-navy/60" />
+            <span>{remaining} de {concert.totalTickets} ingressos disponíveis</span>
+          </div>
+        )}
       </div>
 
-      <Button
-        onClick={() => onReserve(concert)}
-        className={`w-full font-semibold ${
-          isSoldOut
-            ? "bg-navy text-gold-light hover:bg-navy-light"
-            : "bg-gradient-gold text-accent-foreground hover:opacity-90"
-        }`}
-      >
-        {isSoldOut ? "Entrar na Lista de Espera" : "Retirar Ingresso"}
-      </Button>
+      {/* CTA */}
+      <div className="mt-auto">
+        <button
+          onClick={() => onReserve(concert)}
+          className={`w-full font-semibold py-3 px-6 rounded-lg text-sm transition-all duration-300 ${
+            isSoldOut
+              ? "bg-secondary text-navy border border-border hover:bg-navy hover:text-white hover:border-navy"
+              : "bg-navy text-white hover:bg-navy-light shadow-sm hover:shadow-md"
+          }`}
+        >
+          {isSoldOut ? "Entrar na Lista de Espera" : "Retirar Ingresso"}
+        </button>
+      </div>
     </div>
   );
 };
